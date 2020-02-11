@@ -54,7 +54,7 @@ class Pagebody extends React.Component {
             Please answer all of the below questions, except where indicated as
             optional.
           </p>
-          <form>
+          <form className="form-group column">
             <div class="form-group">
               <label class="col-md-4 control-label">Full Name</label>
               <div class="col-md-8 inputGroupContainer">
@@ -63,11 +63,9 @@ class Pagebody extends React.Component {
                     <i class="glyphicon glyphicon-user" />
                   </span>
                   <input
-                    id="fullName"
-                    name="fullName"
-                    placeholder="Full Name"
-                    class="form-control"
                     type="text"
+                    class="form-control"
+                    placeholder="First name"
                   />
                 </div>
               </div>
@@ -139,6 +137,42 @@ class Pagebody extends React.Component {
                     selected={this.state.startDate}
                     onChange={this.handleChange}
                   />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-4 control-label">
+                Tax File number (optional)
+              </label>
+              <div class="col-md-8 inputGroupContainer">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-user" />
+                  </span>
+                  <input
+                    class="col-md-4 control-label"
+                    id="taxfilenumber"
+                    name="taxfilenumber"
+                    placeholder="Tax File Number"
+                    styles="margin-bottom: 10px"
+                    type="text"
+                  />
+                  <p class="sg-Form-helpText">
+                    You can find your TFN on your tax return or you can call ATO
+                    13 28 61 Mon-Fri 8am-6pm
+                  </p>
+                  <div class="container">
+                    <a href="#demo" class="btn btn-info" data-toggle="collapse">
+                      Simple collapsible
+                    </a>
+                    <div id="demo" class="collapse">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
