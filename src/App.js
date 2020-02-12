@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import NewPost from "./components/NewPost";
 import PostList from "./containers/PostList";
+import "./styles.css";
 import Header from "./Header/Header";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Pagebody from "./components/Pagebody";

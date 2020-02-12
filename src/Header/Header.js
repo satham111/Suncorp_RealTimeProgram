@@ -45,7 +45,7 @@ class Header extends React.Component {
           </div>
 
           <div ng-show="!isLoggedIn()" className="col-sm-4">
-            <h1 className="ng-binding">Everyday Super</h1>
+            <h2 className="ng-binding">Everyday Super</h2>
 
             <div>
               <span className="sg-u-smallHidden">Need help? Call </span>

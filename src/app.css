@@ -2,6 +2,13 @@
   text-align: center;
 }
 
+.sg-Btn {
+  content: "";
+  right: 8px;
+  background-image: url(../sg/img//Icon-arrowRight--text.svg);
+  background-repeat: no-repeat;
+  right: 5px;
+}
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;

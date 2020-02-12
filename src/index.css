@@ -6,3 +6,10 @@ body {
 .iframe {
   display: none;
 }
+.sg-Btn {
+  content: "";
+  right: 8px;
+  background-image: url(../sg/img//Icon-arrowRight--text.svg);
+  background-repeat: no-repeat;
+  right: 5px;
+}

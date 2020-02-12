@@ -6,4 +6,262 @@
   display: none;
 }
 
-padding-top: 30px;
+.sg-Btn {
+  float: right;
+  content: "";
+  background-repeat: no-repeat;
+  right: 5px;
+}
+.sg-Btn-sec {
+  color: #478081;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding-left: 7px;
+  position: relative;
+  -left: 49.5px;
+  border: 1px solid #478081;
+  padding-left: 1.3em;
+  padding-right: 1.3em;
+  padding-top: 0.8em;
+  font-size: 100%;
+
+  display: inline-block;
+  min-width: 2.7em;
+  padding: 0.7em;
+  margin: 5px 0 5px 0;
+  font-size: 110%;
+  font-weight: bold;
+  line-height: 1.21;
+  border: 1px solid #478081;
+  color: #096e6e;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: none;
+  vertical-align: middle;
+  background-color: #ffffff;
+  -webkit-border-radius: 0.3em;
+  -moz-border-radius: 0.3em;
+  border-radius: 0.3em;
+  outline: none;
+  cursor: pointer;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.sg-Btn-image {
+  background-image: url(https://super.suncorp.com.au/ssp//sg/img//Icon-plus--secondary.svg);
+  background-repeat: no-repeat;
+}
+.sg-call-to-action {
+  content: "";
+  right: 8px;
+  background-image: url(https://super.suncorp.com.au/ssp/sg/img//Icon-arrowRight--text.svg);
+  background-repeat: no-repeat;
+}
+.sg-main {
+  background-color: #f5f3f1;
+}
+
+.sg-focus {
+  font-weight: bold;
+}
+.sg-Radio-btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.sg-Radio-btn {
+  margin: 0 15px 15px 0;
+}
+.marginTopZero {
+  margin-top: 0 !important;
+}
+
+.sg-Radio-btn {
+  margin: 0 15px 15px 0;
+}
+.sg-Radio,
+.sg-Check {
+  display: inline-block;
+  margin: 0 10px 10px 0;
+  position: relative;
+}
+
+.sg-Radio-input,
+.sg-Check-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  border: 0;
+}
+
+.sg-Radio-btn .sg-Radio-input:not(:disabled):checked ~ .sg-Radio-text {
+  border-color: #00928a;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  color: #ffffff;
+}
+
+.sg-Radio-btn .sg-Radio-input:not(:disabled):checked ~ .sg-Radio-text {
+  background: #00928a;
+  border-color: #004642;
+  -webkit-box-shadow: inset 1.5px 1.5px #004642;
+  -moz-box-shadow: inset 1.5px 1.5px #004642;
+  box-shadow: inset 1.5px 1.5px #004642;
+  color: #ffffff;
+}
+
+.sg-Radio-btn .sg-Radio-input ~ .sg-Radio-text {
+  background-color: #ffffff;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+}
+
+.sg-Radio-btnGroup .sg-Radio-btn .sg-Radio-text {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: stretch;
+  -webkit-align-items: stretch;
+  -moz-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -moz-box-orient: vertical;
+  -moz-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+}
+
+.sg-Radio-btn .sg-Radio-input ~ .sg-Radio-text {
+  min-width: 2.7em;
+  padding: 0.7em;
+  font-size: 110%;
+  line-height: 1.21;
+  border: solid 1px #e0d9d3;
+  color: #000000;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #f5f3f1;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.sg-Radio-text,
+.sg-Check-text {
+  display: inline-block;
+  position: relative;
+  padding-left: 1.9em;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  line-height: 1.4;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.sg-Form-helpText {
+  margin-bottom: 5px;
+  font-size: 0.84em;
+  font-size: 0.756rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+.sg-Form-helpText {
+  color: #656363;
+}
+
+.sg-Form-label {
+  display: inline-block;
+  margin: 0 0 5px 0;
+  cursor: pointer;
+  font-size: 1.12em;
+  font-size: 1.008rem;
+  font-weight: bold;
+  color: #004346;
+}
+.sg-Input {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.sg-Input {
+  -webkit-transition: -webkit-box-shadow 0.2s ease-in;
+  -moz-transition: -moz-box-shadow 0.2s ease-in;
+  -o-transition: box-shadow 0.2s ease-in;
+  transition: box-shadow 0.2s ease-in;
+}
+.sg-Input {
+  display: block;
+  width: 100%;
+  min-width: 4em;
+  padding: 10px;
+  margin: 0 0 5px 0;
+  color: #000000;
+  vertical-align: middle;
+  font-size: 1.12em;
+  font-size: 1.008rem;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cdcbc3;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.sg-u-widthLarger {
+  width: 100%;
+  max-width: 20em;
+}
+
+.sg-Accordion .sg-Accordion-label:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.sg-Accordion-label {
+  position: relative;
+  display: block;
+  padding: 0 0 0 34px;
+  width: 100%;
+  text-align: left;
+  border-width: 0;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  font-weight: bold;
+  color: #478081;
+  background-color: transparent;
+}
