@@ -1,30 +1,57 @@
-import React, { useState } from "react";
+import React from "react";
+import { createPost } from "../actions/Index";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText
-} from "reactstrap";
+import { connect } from "react-redux";
+import { Collapse, Navbar, Nav, NavItem, NavLink } from "reactstrap";
 
 class Pagebody extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      startDate: new Date(),
+      fistname: "",
+      lastname: "",
+      gender: "",
+      dob: "",
+      taxfilenumber: "",
+      occupation: "",
+      addressline1: "",
+      addressline2: "",
+      postalcode: "",
+      select1: "",
+      emailaddress: "",
+      mobilenumber: ""
+    };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
-  state = {
-    startDate: new Date()
+
+  handleChange(e) {
+    this.setState({
+      redirectToReferrer: false
+    });
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  handleSubmit = e => {
+    console.log("handleSubmit 001 " + JSON.stringify(this.state));
+    e.preventDefault();
+    if (this.state.lastname.trim() && this.state.fistname.trim()) {
+      console.log("inside of check");
+      this.props.dispatch(createPost(this.state));
+      this.handleReset();
+    }
   };
-  handleChange = date => {
+  handleReset = () => {
+    this.setState({
+      fistname: "",
+      lastname: ""
+    });
+  };
+  handleOnChange = date => {
     this.setState({
       startDate: date
     });
@@ -32,7 +59,57 @@ class Pagebody extends React.Component {
   render() {
     return (
       <div className="sg-main ">
-        <Navbar
+        <div id="acquire" class="sg-Main-content">
+          <nav id="progress-bar" ng-if="showProgressBar()" class="container">
+            <ol
+              class="sg-Progress sg-Progress--shrinkToNumbers"
+              role="progressbar"
+            >
+              <li
+                ng-repeat="(key, value) in pageEnum"
+                class="sg-Progress-step--prev member-direct-progress-step  sg-Progress-step ng-scope sg-Progress-step--current"
+              >
+                <span class="sg-Progress-text ng-binding">Your details</span>
+              </li>
+              <li
+                ng-repeat="(key, value) in pageEnum"
+                class="member-direct-progress-step sg-Progress-step ng-scope sg-Progress-step--next"
+              >
+                <span
+                  class="sg-Progress-text ng-binding"
+                  ng-click="pageIndex>key &amp;&amp; pageIndex+1!==pageEnum.length &amp;&amp; $parent.validate.goTo(key)"
+                >
+                  Super details
+                </span>
+              </li>
+
+              <li
+                ng-repeat="(key, value) in pageEnum"
+                class="member-direct-progress-step sg-Progress-step ng-scope sg-Progress-step--next"
+              >
+                <span
+                  class="sg-Progress-text ng-binding"
+                  ng-click="pageIndex>key &amp;&amp; pageIndex+1!==pageEnum.length &amp;&amp; $parent.validate.goTo(key)"
+                >
+                  Combine
+                </span>
+              </li>
+              <li
+                ng-repeat="(key, value) in pageEnum"
+                class="member-direct-progress-step sg-Progress-step ng-scope sg-Progress-step--next"
+              >
+                <span
+                  class="sg-Progress-text ng-binding"
+                  ng-click="pageIndex>key &amp;&amp; pageIndex+1!==pageEnum.length &amp;&amp; $parent.validate.goTo(key)"
+                >
+                  Finalise
+                </span>
+              </li>
+            </ol>
+          </nav>
+        </div>
+
+        {/* <Navbar
           className="container sg-main sg-process-text"
           color="light"
           light
@@ -56,38 +133,39 @@ class Pagebody extends React.Component {
               </NavItem>
             </Nav>
           </Collapse>
-        </Navbar>
+        </Navbar> */}
 
-        <div class="container">
+        <div className="container">
           <h5>Your details</h5>
           <p>
             Please answer all of the below questions, except where indicated as
             optional.
           </p>
-          <form className="form-group column">
-            <div class="form-group">
+          <form onSubmit={this.handleSubmit} className="form-group column">
+            <div className="form-group">
               <label className="sg-Form-label">Full Name</label>
-              <div class="col-md-8 inputGroupContainer">
-                <div class="input-group">
-                  <span class="input-group-addon">
-                    <i class="glyphicon glyphicon-user" />
+              <div className="col-md-8 inputGroupContainer">
+                <div className="input-group">
+                  <span className="input-group-addon">
+                    <i className="glyphicon glyphicon-user" />
                   </span>
                   <input
                     type="text"
                     name="fistname"
                     className="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
                     placeholder="First name"
+                    onChange={this.handleChange}
                   />
                 </div>
               </div>
             </div>
 
-            <div class="form-group">
+            <div className="form-group">
               <label className="sg-Form-label">Last Name</label>
-              <div class="col-md-8 inputGroupContainer">
-                <div class="input-group">
-                  <span class="input-group-addon">
-                    <i class="glyphicon glyphicon-user" />
+              <div className="col-md-8 inputGroupContainer">
+                <div className="input-group">
+                  <span className="input-group-addon">
+                    <i className="glyphicon glyphicon-user" />
                   </span>
                   <input
                     id="lastname"
@@ -95,18 +173,19 @@ class Pagebody extends React.Component {
                     placeholder="Last Name"
                     className="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
                     type="text"
+                    onChange={this.handleChange}
                   />
                 </div>
               </div>
             </div>
 
-            <div class="sg-Form-question">
-              <label id="gender" class="sg-Form-label">
+            <div className="sg-Form-question">
+              <label id="gender" className="sg-Form-label">
                 Gender
               </label>
 
               <div
-                class="sg-Radio-btnGroup sg-Radio-btnGroup--noFullWidth ng-isolate-scope is-invalid"
+                className="sg-Radio-btnGroup sg-Radio-btnGroup--noFullWidth ng-isolate-scope is-invalid"
                 name="genderGroup"
                 validation="event:[#gender-male-label&amp;#gender-female-label]|option-required"
                 autocomplete="off"
@@ -114,121 +193,160 @@ class Pagebody extends React.Component {
               >
                 <label
                   id="gender-male-label"
-                  class="sg-Radio sg-Radio-btn marginTopZero"
+                  className="sg-Radio sg-Radio-btn marginTopZero"
                   elementid="0.028977479695404096"
                 >
                   <input
                     id="gender-male"
                     name="gender"
-                    class="sg-Radio-input ng-valid ng-not-empty ng-dirty user-success ng-touched ng-valid-parse"
+                    className="sg-Radio-input ng-valid ng-not-empty ng-dirty user-success ng-touched ng-valid-parse"
                     type="radio"
                     value="male"
                     ng-model="customerDetail.gender"
                     ng-disabled="acquireExisting"
                     validationdisabled="true"
+                    onChange={this.handleChange}
                   />
-                  <i class="sg-Radio-icon" />
-                  <span class="sg-Radio-text">Male</span>
+                  <i className="sg-Radio-icon" />
+                  <span className="sg-Radio-text">Male</span>
                 </label>
                 <label
                   id="gender-female-label"
-                  class="sg-Radio sg-Radio-btn marginTopZero"
+                  className="sg-Radio sg-Radio-btn marginTopZero"
                   elementid="0.42415372137756036"
                 >
                   <input
                     id="gender-female"
                     name="gender"
-                    class="sg-Radio-input ng-valid ng-valid-valid-gender ng-not-empty ng-dirty user-success ng-touched"
+                    className="sg-Radio-input ng-valid ng-valid-valid-gender ng-not-empty ng-dirty user-success ng-touched"
                     type="radio"
                     value="fem"
                     validate-gender="customerDetail.title"
                     ng-model="customerDetail.gender"
                     ng-disabled="acquireExisting"
                     validationdisabled="true"
+                    onChange={this.handleChange}
                   />
-                  <i class="sg-Radio-icon" />
-                  <span class="sg-Radio-text">Female</span>
+                  <i className="sg-Radio-icon" />
+                  <span className="sg-Radio-text">Female</span>
                 </label>
               </div>
-              <field-error field="gender" class="ng-scope">
+              <field-error field="gender" className="ng-scope">
                 <span
-                  class="error-msg sg-Validation-errorMessage ng-binding ng-scope"
+                  className="error-msg sg-Validation-errorMessage ng-binding ng-scope"
                   ng-if="getCurrentForm().hasErrors(field)"
                   ng-bind="getErrorMessage(getCurrentForm()[field].$error)"
                 />
               </field-error>
-              <div class="sg-Validation-errorWrapper" />
+              <div className="sg-Validation-errorWrapper" />
             </div>
             <div />
 
-            <div class="form-group">
+            <div className="form-group">
               <label className="sg-Form-label">Date of birth</label>
-              <div class="col-md-8 inputGroupContainer">
-                <div class="input-group">
+              <div className="col-md-8 inputGroupContainer">
+                <div className="input-group">
                   <DatePicker
                     name="dob"
-                    class="form-control"
+                    className="form-control"
                     selected={this.state.startDate}
-                    onChange={this.handleChange}
+                    onChange={this.handleOnChange}
                   />
                 </div>
               </div>
             </div>
 
-            <div class="form-group">
+            <div className="form-group">
               <label className="sg-Form-label">
                 Tax File number (optional)
               </label>
-              <div class="col-md-8 inputGroupContainer">
-                <div class="input-group">
-                  <span class="input-group-addon">
-                    <i class="glyphicon glyphicon-user" />
+              <div className="col-md-8 inputGroupContainer">
+                <div className="input-group">
+                  <span className="input-group-addon">
+                    <i className="glyphicon glyphicon-user" />
                   </span>
                   <input
-                    class="col-md-6 control-label"
                     id="taxfilenumber"
                     name="taxfilenumber"
                     placeholder="Tax File Number"
                     className="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
                     type="text"
+                    onChange={this.handleChange}
                   />
-                  <p class="sg-Form-helpText">
+                  <p className="sg-Form-helpText">
                     You can find your TFN on your tax return or you can call ATO
                     13 28 61 Mon-Fri 8am-6pm
                   </p>
-                  <div class="container">
+                  <div className="sg-Accordion">
                     <button
-                      href="#demo"
                       type="button"
-                      class="sg-Type--link sg-Accordion-label js-Accordion"
+                      className="sg-Accordion-label js-Accordion"
+                      id="tfn_accordion_link"
+                      role="tab"
                     >
-                      <u>(+) Why do you need my occupation? </u>
+                      Why do you need my TFN?
                     </button>
-                    <div id="demo" class="collapse">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+                    <div
+                      id="tfn_accordion_content"
+                      className="sg-Accordion-content is-closed sg-Type--size14"
+                      aria-expanded="false"
+                      aria-labelledby="tfn_accordion_link"
+                      data-animate="true"
+                      role="tabpanel"
+                    >
+                      {/* <div
+                        ng-if="GLOBAL_CONFIG.static_variable.product_type.isEDSSuper(productType)"
+                        className="ng-scope"
+                      >
+                        <p>
+                          It's not compulsory to provide your TFN. If you don't
+                          wish to provide it to us now, you can give it to us
+                          online after you've set-up your account. But providing
+                          us with your TFN means:
+                        </p>
+
+                        <ul className="sg-List-unordered">
+                          <li>
+                            We can accept all types of contributions into your
+                            Everyday Super account
+                          </li>
+                          <li>
+                            Tax on contributions to your superannuation
+                            account/s will not increase
+                          </li>
+                          <li>
+                            No additional tax will be deducted when you start
+                            drawing down your super (other than taxes that may
+                            ordinarily apply)
+                          </li>
+                          <li>
+                            It will make it easier to trace different super
+                            accounts in your name so you receive all your super
+                            on retirement.
+                          </li>
+                        </ul>
+                      </div> */}
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div class="form-group">
+              <div className="form-group">
                 <label className="sg-Form-label">Occupation</label>
-                <div class="col-md-8 inputGroupContainer">
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <i class="glyphicon glyphicon-user" />
+                <div className="col-md-8 inputGroupContainer">
+                  <div className="input-group">
+                    <span className="input-group-addon">
+                      <i className="glyphicon glyphicon-user" />
                     </span>
                     <input
                       id="occupation"
                       name="occupation"
                       placeholder="Occupation"
-                      class="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
+                      className="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
                       type="text"
                     />
-                    <p class="sg-Form-helpText">
+                    <p className="sg-Form-helpText">
                       If you can't find your occupation, please select the
                       closest match. If you have more than one job, choose the
                       one you spend the most time doing per week.
@@ -238,12 +356,12 @@ class Pagebody extends React.Component {
               </div>
               <div id="before-appbar" />
               <h5>Contact Details</h5>
-              <div class="form-group">
+              <div className="form-group">
                 <label className="sg-Form-label">AddressLine 1</label>
-                <div class="col-md-8 inputGroupContainer">
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <i class="glyphicon glyphicon-user" />
+                <div className="col-md-8 inputGroupContainer">
+                  <div className="input-group">
+                    <span className="input-group-addon">
+                      <i className="glyphicon glyphicon-user" />
                     </span>
                     <input
                       id="addressline1"
@@ -251,17 +369,18 @@ class Pagebody extends React.Component {
                       placeholder="Addressline 1"
                       className="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
                       type="text"
+                      onChange={this.handleChange}
                     />
                   </div>
                 </div>
               </div>
 
-              <div class="form-group">
+              <div className="form-group">
                 <label className="sg-Form-label">AddressLine 2</label>
-                <div class="col-md-8 inputGroupContainer">
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <i class="glyphicon glyphicon-user" />
+                <div className="col-md-8 inputGroupContainer">
+                  <div className="input-group">
+                    <span className="input-group-addon">
+                      <i className="glyphicon glyphicon-user" />
                     </span>
                     <input
                       id="addressline2"
@@ -269,57 +388,64 @@ class Pagebody extends React.Component {
                       placeholder="Addressline 2"
                       className="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
                       type="text"
+                      onChange={this.handleChange}
                     />
                   </div>
                 </div>
               </div>
-              <div class="form-group">
+              <div className="form-group">
                 <label className="sg-Form-label">Suburb or postcode</label>
-                <div class="col-md-8 inputGroupContainer">
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <i class="glyphicon glyphicon-user" />
+                <div className="col-md-8 inputGroupContainer">
+                  <div className="input-group">
+                    <span className="input-group-addon">
+                      <i className="glyphicon glyphicon-user" />
                     </span>
                     <input
                       id="postalcode"
                       name="postalcode"
                       placeholder="Postal Code"
-                      class="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
+                      className="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
                       type="text"
+                      onChange={this.handleChange}
                     />
                   </div>
                 </div>
               </div>
 
-              <div id="div_id_select" class="form-group required">
+              <div id="div_id_select" className="form-group required">
                 <label
                   for="id_select"
-                  class="control-label col-md-4  requiredField"
+                  className="control-label col-md-4  requiredField"
                 >
                   {" "}
                   Use this address for your mailing address?
-                  <span class="asteriskField">*</span>{" "}
+                  <span className="asteriskField">*</span>{" "}
                 </label>
-                <div class="controls col-md-8 " styles="margin-bottom: 10px">
-                  <label class="radio-inline">
+                <div
+                  className="controls col-md-8 "
+                  styles="margin-bottom: 10px"
+                >
+                  <label className="radio-inline">
                     <input
                       type="radio"
                       checked="checked"
                       name="select1"
                       id="id_select_1"
                       value="S"
+                      onChange={this.handleChange}
                       styles="margin-bottom: 10px"
                     />{" "}
                     Yes
                   </label>
                   {"    "}
-                  <label class="radio-inline">
+                  <label className="radio-inline">
                     {" "}
                     <input
                       type="radio"
                       name="select1"
                       id="id_select_2"
                       value="P"
+                      onChange={this.handleChange}
                       styles="margin-bottom: 10px"
                     />{" "}
                     No
@@ -327,12 +453,12 @@ class Pagebody extends React.Component {
                 </div>
               </div>
 
-              <div class="form-group">
+              <div className="form-group">
                 <label className="sg-Form-label">Email Address</label>
-                <div class="col-md-8 inputGroupContainer">
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <i class="glyphicon glyphicon-user" />
+                <div className="col-md-8 inputGroupContainer">
+                  <div className="input-group">
+                    <span className="input-group-addon">
+                      <i className="glyphicon glyphicon-user" />
                     </span>
                     <input
                       id="emailaddress"
@@ -340,37 +466,49 @@ class Pagebody extends React.Component {
                       placeholder="Email Address"
                       className="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
                       type="text"
+                      value={this.state.emailaddress}
+                      onChange={this.handleChange}
                     />
                   </div>
                 </div>
               </div>
 
-              <div class="form-group">
+              <div className="form-group">
                 <label className="sg-Form-label">Mobile Number</label>
-                <div class="col-md-8 inputGroupContainer">
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <i class="glyphicon glyphicon-user" />
+                <div className="col-md-8 inputGroupContainer">
+                  <div className="input-group">
+                    <span className="input-group-addon">
+                      <i className="glyphicon glyphicon-user" />
                     </span>
                     <input
                       id="mobilenumber"
                       name="mobilenumber"
                       placeholder="Mobile Number"
-                      class="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
+                      className="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
                       type="text"
+                      value={this.state.mobilenumber}
+                      onChange={this.handleChange}
                     />
                   </div>
                 </div>
               </div>
 
-              <div class="form-group">
-                <button type="button" class="sg-Btn-sec btn-default">
-                  <i class="sg-call-to-action " /> Add an alternate contact
-                  number
+              <div className="form-group">
+                <button type="button" className="sg-Btn-sec btn-default">
+                  <i className="sg-Btn-icon">
+                    <span>
+                      <img
+                        src="https://super.suncorp.com.au/ssp/sg/img//Icon-plus--secondary.svg"
+                        alt="Suncorp"
+                      />
+                    </span>
+                  </i>
+                  Add an alternate contact number
                 </button>
               </div>
 
               <button
+                type="submit"
                 className="btn btn-warning sg-Btn"
                 styles="float:right"
                 id="acquire_your_detail_continue"
@@ -384,4 +522,5 @@ class Pagebody extends React.Component {
     );
   }
 }
-export default Pagebody;
+//export default Pagebody;
+export default connect(null)(Pagebody);
