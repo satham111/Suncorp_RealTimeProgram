@@ -364,7 +364,7 @@
 }
 
 .sg-Progress-step--current:after {
-  background-image: url(https://github.com/satham111/ReactTraingEntry/blob/master/Capture.PNG);
+  background-image: url(sandbox/src/images/Capture.PNG);
 }
 article,
 aside,

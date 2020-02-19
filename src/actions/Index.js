@@ -13,7 +13,8 @@ export const createPost = ({
   postalcode,
   select1,
   emailaddress,
-  mobilenumber
+  mobilenumber,
+  disply
 }) => ({
   type: ADD_POST,
   payload: {
@@ -29,7 +30,8 @@ export const createPost = ({
     postalcode,
     select1,
     emailaddress,
-    mobilenumber
+    mobilenumber,
+    disply
   }
 });
 

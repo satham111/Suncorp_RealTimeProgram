@@ -3,7 +3,7 @@ import { createPost } from "../actions/Index";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
-import { Collapse, Navbar, Nav, NavItem, NavLink } from "reactstrap";
+// import { Collapse, Navbar, Nav, NavItem, NavLink } from "reactstrap";
 
 class Pagebody extends React.Component {
   constructor(props) {
@@ -22,7 +22,8 @@ class Pagebody extends React.Component {
       postalcode: "",
       select1: "",
       emailaddress: "",
-      mobilenumber: ""
+      mobilenumber: "",
+      disply: true
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -43,6 +44,9 @@ class Pagebody extends React.Component {
       console.log("inside of check");
       this.props.dispatch(createPost(this.state));
       this.handleReset();
+      this.setState({
+        disply: false
+      });
     }
   };
   handleReset = () => {
@@ -67,7 +71,7 @@ class Pagebody extends React.Component {
             >
               <li
                 ng-repeat="(key, value) in pageEnum"
-                class="sg-Progress-step--prev member-direct-progress-step  sg-Progress-step ng-scope sg-Progress-step--current"
+                class="sg-Progress-step--prev member-direct-progress-step  sg-Progress-step ng-scope  sg-Progress-step--current"
               >
                 <span class="sg-Progress-text ng-binding">Your details</span>
               </li>
