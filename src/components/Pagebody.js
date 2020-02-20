@@ -3,7 +3,7 @@ import { createPost } from "../actions/Index";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
-// import { Collapse, Navbar, Nav, NavItem, NavLink } from "reactstrap";
+import PropTypes from "prop-types";
 
 class Pagebody extends React.Component {
   constructor(props) {
@@ -23,11 +23,13 @@ class Pagebody extends React.Component {
       select1: "",
       emailaddress: "",
       mobilenumber: "",
-      disply: true
+      disply: true,
+      enableAltCont: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.alternateContact = this.alternateContact.bind(this);
   }
 
   handleChange(e) {
@@ -60,85 +62,23 @@ class Pagebody extends React.Component {
       startDate: date
     });
   };
+  alternateContact = () => {
+    this.setState({
+      enableAltCont: true
+    });
+  };
   render() {
+    const styleObject = {
+      height: "25px"
+    };
+    const displayno = {
+      display: this.state.enableAltCont ? "block" : "none"
+    };
+    const displayaltbutton = {
+      display: this.state.enableAltCont ? "none" : "block"
+    };
     return (
       <div className="sg-main ">
-        <div id="acquire" class="sg-Main-content">
-          <nav id="progress-bar" ng-if="showProgressBar()" class="container">
-            <ol
-              class="sg-Progress sg-Progress--shrinkToNumbers"
-              role="progressbar"
-            >
-              <li
-                ng-repeat="(key, value) in pageEnum"
-                class="sg-Progress-step--prev member-direct-progress-step  sg-Progress-step ng-scope  sg-Progress-step--current"
-              >
-                <span class="sg-Progress-text ng-binding">Your details</span>
-              </li>
-              <li
-                ng-repeat="(key, value) in pageEnum"
-                class="member-direct-progress-step sg-Progress-step ng-scope sg-Progress-step--next"
-              >
-                <span
-                  class="sg-Progress-text ng-binding"
-                  ng-click="pageIndex>key &amp;&amp; pageIndex+1!==pageEnum.length &amp;&amp; $parent.validate.goTo(key)"
-                >
-                  Super details
-                </span>
-              </li>
-
-              <li
-                ng-repeat="(key, value) in pageEnum"
-                class="member-direct-progress-step sg-Progress-step ng-scope sg-Progress-step--next"
-              >
-                <span
-                  class="sg-Progress-text ng-binding"
-                  ng-click="pageIndex>key &amp;&amp; pageIndex+1!==pageEnum.length &amp;&amp; $parent.validate.goTo(key)"
-                >
-                  Combine
-                </span>
-              </li>
-              <li
-                ng-repeat="(key, value) in pageEnum"
-                class="member-direct-progress-step sg-Progress-step ng-scope sg-Progress-step--next"
-              >
-                <span
-                  class="sg-Progress-text ng-binding"
-                  ng-click="pageIndex>key &amp;&amp; pageIndex+1!==pageEnum.length &amp;&amp; $parent.validate.goTo(key)"
-                >
-                  Finalise
-                </span>
-              </li>
-            </ol>
-          </nav>
-        </div>
-
-        {/* <Navbar
-          className="container sg-main sg-process-text"
-          color="light"
-          light
-          expand="md"
-        >
-          <Collapse navbar className="sg-main">
-            <Nav className="mr-auto sg-main" navbar>
-              <NavItem>
-                <NavLink className="p-2 mb-1 sg-focus " href="/components/">
-                  Your Details
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/components/">Super Details</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/components/">Combine</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/components/">Finalise</NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Navbar> */}
-
         <div className="container">
           <h5>Your details</h5>
           <p>
@@ -146,41 +86,47 @@ class Pagebody extends React.Component {
             optional.
           </p>
           <form onSubmit={this.handleSubmit} className="form-group column">
-            <div className="form-group">
-              <label className="sg-Form-label">Full Name</label>
-              <div className="col-md-8 inputGroupContainer">
-                <div className="input-group">
-                  <span className="input-group-addon">
-                    <i className="glyphicon glyphicon-user" />
-                  </span>
-                  <input
-                    type="text"
-                    name="fistname"
-                    className="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
-                    placeholder="First name"
-                    onChange={this.handleChange}
-                  />
-                </div>
-              </div>
+            <div class="sg-Form-question">
+              <label class="sg-Form-label" for="first-name">
+                First name
+              </label>
+              <input
+                type="text"
+                class="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
+                name="first-name"
+                inputmode="latin-name"
+                maxlength="50"
+                requirederrorkey="USER_FIRST_NAME_REQUIRED"
+                ng-model="customerDetail.firstName"
+                ng-disabled="acquireExisting"
+                validationdisabled="true"
+                validation="field-required first-name field-length"
+                autocomplete="off"
+                elementid="0.5279141440573916"
+                onChange={this.handleChange}
+              />
             </div>
 
-            <div className="form-group">
-              <label className="sg-Form-label">Last Name</label>
-              <div className="col-md-8 inputGroupContainer">
-                <div className="input-group">
-                  <span className="input-group-addon">
-                    <i className="glyphicon glyphicon-user" />
-                  </span>
-                  <input
-                    id="lastname"
-                    name="lastname"
-                    placeholder="Last Name"
-                    className="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
-                    type="text"
-                    onChange={this.handleChange}
-                  />
-                </div>
-              </div>
+            <div class="sg-Form-question">
+              <label class="sg-Form-label" for="last-name">
+                Last name
+              </label>
+              <input
+                type="text"
+                class="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
+                name="last-name"
+                inputmode="latin-name"
+                maxlength="50"
+                min-length="2"
+                requirederrorkey="USER_LAST_NAME_REQUIRED"
+                ng-model="customerDetail.lastName"
+                ng-disabled="acquireExisting"
+                validationdisabled="true"
+                validation="field-required last-name field-length min-field-length"
+                autocomplete="off"
+                elementid="0.8915857547482979"
+                onChange={this.handleChange}
+              />
             </div>
 
             <div className="sg-Form-question">
@@ -246,285 +192,419 @@ class Pagebody extends React.Component {
             </div>
             <div />
 
-            <div className="form-group">
+            <div class="sg-Form-question">
               <label className="sg-Form-label">Date of birth</label>
-              <div className="col-md-8 inputGroupContainer">
-                <div className="input-group">
-                  <DatePicker
-                    name="dob"
-                    className="form-control"
-                    selected={this.state.startDate}
-                    onChange={this.handleOnChange}
-                  />
-                </div>
-              </div>
+
+              <DatePicker
+                class="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
+                name="dob"
+                className="form-control"
+                selected={this.state.startDate}
+                onChange={this.handleOnChange}
+              />
             </div>
 
-            <div className="form-group">
-              <label className="sg-Form-label">
+            <div class="sg-Form-question" ng-show="!tfnSupplied()">
+              <label class="sg-Form-label" for="taxFileNumber">
                 Tax File number (optional)
               </label>
-              <div className="col-md-8 inputGroupContainer">
-                <div className="input-group">
-                  <span className="input-group-addon">
-                    <i className="glyphicon glyphicon-user" />
-                  </span>
-                  <input
-                    id="taxfilenumber"
-                    name="taxfilenumber"
-                    placeholder="Tax File Number"
-                    className="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
-                    type="text"
-                    onChange={this.handleChange}
-                  />
-                  <p className="sg-Form-helpText">
-                    You can find your TFN on your tax return or you can call ATO
-                    13 28 61 Mon-Fri 8am-6pm
-                  </p>
-                  <div className="sg-Accordion">
-                    <button
-                      type="button"
-                      className="sg-Accordion-label js-Accordion"
-                      id="tfn_accordion_link"
-                      role="tab"
-                    >
-                      Why do you need my TFN?
-                    </button>
-
-                    <div
-                      id="tfn_accordion_content"
-                      className="sg-Accordion-content is-closed sg-Type--size14"
-                      aria-expanded="false"
-                      aria-labelledby="tfn_accordion_link"
-                      data-animate="true"
-                      role="tabpanel"
-                    >
-                      {/* <div
-                        ng-if="GLOBAL_CONFIG.static_variable.product_type.isEDSSuper(productType)"
-                        className="ng-scope"
-                      >
-                        <p>
-                          It's not compulsory to provide your TFN. If you don't
-                          wish to provide it to us now, you can give it to us
-                          online after you've set-up your account. But providing
-                          us with your TFN means:
-                        </p>
-
-                        <ul className="sg-List-unordered">
-                          <li>
-                            We can accept all types of contributions into your
-                            Everyday Super account
-                          </li>
-                          <li>
-                            Tax on contributions to your superannuation
-                            account/s will not increase
-                          </li>
-                          <li>
-                            No additional tax will be deducted when you start
-                            drawing down your super (other than taxes that may
-                            ordinarily apply)
-                          </li>
-                          <li>
-                            It will make it easier to trace different super
-                            accounts in your name so you receive all your super
-                            on retirement.
-                          </li>
-                        </ul>
-                      </div> */}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label className="sg-Form-label">Occupation</label>
-                <div className="col-md-8 inputGroupContainer">
-                  <div className="input-group">
-                    <span className="input-group-addon">
-                      <i className="glyphicon glyphicon-user" />
-                    </span>
-                    <input
-                      id="occupation"
-                      name="occupation"
-                      placeholder="Occupation"
-                      className="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
-                      type="text"
-                    />
-                    <p className="sg-Form-helpText">
-                      If you can't find your occupation, please select the
-                      closest match. If you have more than one job, choose the
-                      one you spend the most time doing per week.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div id="before-appbar" />
-              <h5>Contact Details</h5>
-              <div className="form-group">
-                <label className="sg-Form-label">AddressLine 1</label>
-                <div className="col-md-8 inputGroupContainer">
-                  <div className="input-group">
-                    <span className="input-group-addon">
-                      <i className="glyphicon glyphicon-user" />
-                    </span>
-                    <input
-                      id="addressline1"
-                      name="addressline1"
-                      placeholder="Addressline 1"
-                      className="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
-                      type="text"
-                      onChange={this.handleChange}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label className="sg-Form-label">AddressLine 2</label>
-                <div className="col-md-8 inputGroupContainer">
-                  <div className="input-group">
-                    <span className="input-group-addon">
-                      <i className="glyphicon glyphicon-user" />
-                    </span>
-                    <input
-                      id="addressline2"
-                      name="addressline2"
-                      placeholder="Addressline 2"
-                      className="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
-                      type="text"
-                      onChange={this.handleChange}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="form-group">
-                <label className="sg-Form-label">Suburb or postcode</label>
-                <div className="col-md-8 inputGroupContainer">
-                  <div className="input-group">
-                    <span className="input-group-addon">
-                      <i className="glyphicon glyphicon-user" />
-                    </span>
-                    <input
-                      id="postalcode"
-                      name="postalcode"
-                      placeholder="Postal Code"
-                      className="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
-                      type="text"
-                      onChange={this.handleChange}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div id="div_id_select" className="form-group required">
-                <label
-                  for="id_select"
-                  className="control-label col-md-4  requiredField"
+              <input
+                id="taxFileNumber"
+                type="text"
+                class="sg-Input sg-u-widthLarger ssp-tfn ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
+                name="taxFileNumber"
+                validation="tfn-format"
+                placeholder="9 digits"
+                ng-model="customerDetail.tfnNumber"
+                ng-trim="false"
+                optional="true"
+                maxlength="9"
+                autocomplete="off"
+                elementid="0.11780298440406956"
+              />
+              <div class="sg-Validation-errorWrapper validation-select-occupation" />
+              <p class="sg-Form-helpText">
+                You can find your TFN on your tax return or you can call ATO 13
+                28 61 Mon-Fri 8am-6pm
+              </p>
+              <div class="sg-Accordion">
+                <button
+                  type="button"
+                  class="sg-Accordion-label js-Accordion"
+                  id="tfn_accordion_link"
+                  aria-selected="false"
+                  aria-controls="tfn_accordion_content"
+                  role="tab"
                 >
-                  {" "}
-                  Use this address for your mailing address?
-                  <span className="asteriskField">*</span>{" "}
-                </label>
-                <div
-                  className="controls col-md-8 "
-                  styles="margin-bottom: 10px"
-                >
-                  <label className="radio-inline">
-                    <input
-                      type="radio"
-                      checked="checked"
-                      name="select1"
-                      id="id_select_1"
-                      value="S"
-                      onChange={this.handleChange}
-                      styles="margin-bottom: 10px"
-                    />{" "}
-                    Yes
-                  </label>
-                  {"    "}
-                  <label className="radio-inline">
-                    {" "}
-                    <input
-                      type="radio"
-                      name="select1"
-                      id="id_select_2"
-                      value="P"
-                      onChange={this.handleChange}
-                      styles="margin-bottom: 10px"
-                    />{" "}
-                    No
-                  </label>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label className="sg-Form-label">Email Address</label>
-                <div className="col-md-8 inputGroupContainer">
-                  <div className="input-group">
-                    <span className="input-group-addon">
-                      <i className="glyphicon glyphicon-user" />
-                    </span>
-                    <input
-                      id="emailaddress"
-                      name="emailaddress"
-                      placeholder="Email Address"
-                      className="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
-                      type="text"
-                      value={this.state.emailaddress}
-                      onChange={this.handleChange}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label className="sg-Form-label">Mobile Number</label>
-                <div className="col-md-8 inputGroupContainer">
-                  <div className="input-group">
-                    <span className="input-group-addon">
-                      <i className="glyphicon glyphicon-user" />
-                    </span>
-                    <input
-                      id="mobilenumber"
-                      name="mobilenumber"
-                      placeholder="Mobile Number"
-                      className="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
-                      type="text"
-                      value={this.state.mobilenumber}
-                      onChange={this.handleChange}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <button type="button" className="sg-Btn-sec btn-default">
-                  <i className="sg-Btn-icon">
-                    <span>
-                      <img
-                        src="https://super.suncorp.com.au/ssp/sg/img//Icon-plus--secondary.svg"
-                        alt="Suncorp"
-                      />
-                    </span>
-                  </i>
-                  Add an alternate contact number
+                  Why do you need my TFN?
                 </button>
-              </div>
 
-              <button
-                type="submit"
-                className="btn btn-warning sg-Btn"
-                styles="float:right"
-                id="acquire_your_detail_continue"
+                <div
+                  id="tfn_accordion_content"
+                  class="sg-Accordion-content is-closed sg-Type--size14"
+                  aria-expanded="false"
+                  aria-labelledby="tfn_accordion_link"
+                  data-animate="true"
+                  role="tabpanel"
+                >
+                  {/* <!-- ngIf: GLOBAL_CONFIG.static_variable.product_type.isEDSSuper(productType) --><div ng-if="GLOBAL_CONFIG.static_variable.product_type.isEDSSuper(productType)" class="ng-scope"> */}
+                  <p>
+                    It's not compulsory to provide your TFN. If you don't wish
+                    to provide it to us now, you can give it to us online after
+                    you've set-up your account. But providing us with your TFN
+                    means:
+                  </p>
+
+                  <ul class="sg-List-unordered">
+                    <li>
+                      We can accept all types of contributions into your
+                      Everyday Super account
+                    </li>
+                    <li>
+                      Tax on contributions to your superannuation account/s will
+                      not increase
+                    </li>
+                    <li>
+                      No additional tax will be deducted when you start drawing
+                      down your super (other than taxes that may ordinarily
+                      apply)
+                    </li>
+                    <li>
+                      It will make it easier to trace different super accounts
+                      in your name so you receive all your super on retirement.
+                    </li>
+                  </ul>
+                  {/* </div><!-- end ngIf: GLOBAL_CONFIG.static_variable.product_type.isEDSSuper(productType) -->
+                        <!-- ngIf: GLOBAL_CONFIG.static_variable.product_type.isEDSPension(productType) --> */}
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="sg-Form-question"
+              ng-show="GLOBAL_CONFIG.static_variable.product_type.isEDSSuper(productType)"
+            >
+              <label class="sg-Form-label" for="select-occupation">
+                Occupation
+              </label>
+              <input
+                type="text"
+                class="sg-Input validation-field sg-u-widthLarger ng-pristine ng-untouched ng-valid ng-isolate-scope ui-autocomplete-input ng-empty"
+                id="select-occupation"
+                name="select-occupation"
+                ng-model="customerDetail.occupation"
+                ng-model-options="{updateOn: 'blur'}"
+                placeholder="Start typing and select from list"
+                ssp-autocomplete-occupation=""
+                requirederrorkey="OCCUPATION_REQUIRED"
+                validation="field-required valid-occupation"
+                autocomplete="off"
+                elementid="0.8771686093390343"
+              />
+              <div class="sg-Validation-errorWrapper validation-select-occupation" />
+
+              <p class="sg-Form-helpText">
+                If you can't find your occupation, please select the closest
+                match. If you have more than one job, choose the one you spend
+                the most time doing per week.
+              </p>
+              <div class="sg-Accordion">
+                <button
+                  type="button"
+                  class="sg-Type--link sg-Accordion-label js-Accordion"
+                  id="occupation_accordion_link"
+                  aria-selected="false"
+                  aria-controls="occupation_accordion_content"
+                  role="tab"
+                >
+                  Why do you need my occupation?
+                </button>
+
+                <div
+                  id="occupation_accordion_content"
+                  class="sg-Accordion-content is-closed sg-Type--size14"
+                  aria-expanded="false"
+                  aria-labelledby="occupation_accordion_link"
+                  data-animate="true"
+                  role="tabpanel"
+                >
+                  <p>
+                    It's used to work out what level of insurance cover you're
+                    eligible for, as part of your super. We are required to
+                    offer you insurance with your super account. However, if
+                    you're eligible for insurance cover, you can easily change
+                    or cancel your cover once your super is setup.
+                  </p>
+                  <p>
+                    Please note if you work in a hazardous occupation e.g
+                    underground miner, abalone diver or with explosives,
+                    insurance cover won't be included as part of your super. For
+                    questions please refer to the insurance section of the
+                    Everyday Super
+                    <a
+                      ng-href="http://www.suncorp.com.au/super/sites/default/files/pdf/pds%20and%20forms/suncorp-everyday-super-product-guide.pdf"
+                      target="_blank"
+                      href="http://www.suncorp.com.au/super/sites/default/files/pdf/pds%20and%20forms/suncorp-everyday-super-product-guide.pdf"
+                    >
+                      Product Guide
+                    </a>
+                    (page 24) or call us on
+                    <a
+                      class="no-decoration ng-binding"
+                      styles="cursor: inherit;"
+                    >
+                      1800 191 517
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div id="before-appbar" />
+            <h5>Contact Details</h5>
+
+            <div class="sg-Form-question">
+              <label class="sg-Form-label">Address line 1</label>
+              <input
+                type="text"
+                class="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
+                name="residentialAddressLine1"
+                placeholder="E.g Unit 2 108 Plaxis St"
+                maxlength="150"
+                ng-model="customerDetail.residentialAddress.line1"
+                validation="field-required address-line-format field-length"
+                requirederrorkey="ADDRESS_REQUIRED"
+                ng-trim="false"
+                autocomplete="off"
+                elementid="0.15943002330401335"
+              />
+
+              <p class="sg-Form-helpText">
+                Sorry we can't accept PO boxes for a residential address.
+                However they can be used for your mailing address
+              </p>
+            </div>
+
+            <div class="sg-Form-question">
+              <label class="sg-Form-label">Address line 2 (optional)</label>
+              <input
+                type="text"
+                class="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
+                name="residentialAddressLine2"
+                maxlength="50"
+                placeholder="Apartment, Suite, unit, building, floor, etc."
+                ng-model="customerDetail.residentialAddress.line2"
+                validation="address-line-format field-length"
+                optional="true"
+                ng-trim="false"
+                autocomplete="off"
+                elementid="0.9992514393632312"
+              />
+            </div>
+
+            <div class="sg-Form-question ">
+              <label
+                class="sg-Form-label"
+                for="residentialAddressSuburbPostcodeState"
               >
-                Continue
+                Suburb or postcode
+              </label>
+              <input
+                type="text"
+                class="sg-Input sg-u-widthLarger validation-field ng-pristine ng-untouched ui-autocomplete-input ng-empty ng-invalid ng-invalid-required ng-valid-maxlength"
+                id="residentialAddressSuburbPostcodeState"
+                name="residentialAddressSuburbPostcodeState"
+                ng-model="customerDetail.residentialAddress.suburbPostcodeState"
+                ng-model-options="{updateOn: 'blur'}"
+                maxlength="60"
+                placeholder="Start typing and select from list"
+                data-required=""
+                postcode-validation=""
+                ssp-autocomplete=""
+                autocomplete="off"
+              />
+              <field-error
+                field="residentialAddressSuburbPostcodeState"
+                class="ng-scope"
+              />
+            </div>
+
+            <div class="sg-Form-question">
+              <label id="sameAsPostal" class="sg-Form-label">
+                Use this address for your mailing address?
+              </label>
+              <div
+                ng-form="widget"
+                id="sameAsPostal"
+                name="sameAsPostal"
+                btn-group="true"
+                ng-model="customerDetail.sameAsPostalAddress"
+                values="[{name: 'Yes', value: 'yes'}, {name: 'No', value: 'no'}]"
+                btn-size="xsmall"
+                class="ng-valid ng-isolate-scope ng-not-empty ng-valid-required ng-dirty ng-valid-parse"
+              >
+                <ng-transclude />
+
+                <div
+                  id="customerDetail_sameAsPostalAddress--buttons"
+                  class="sg-Radio-btnGroup sg-Radio-btnGroup--xsmall"
+                  role="radiogroup"
+                  aria-labelledby="customerDetail_sameAsPostalAddress--label"
+                >
+                  <label
+                    class="sg-Radio sg-Radio-btn sg-Radio-btn--stacked ng-scope"
+                    ng-class="{'sg-Radio-btnGroup sg-Radio-btnGroup--xsmall' : sizeType === 'label'}"
+                    ng-repeat="value in radioValues"
+                  >
+                    <input
+                      id="customerDetail_sameAsPostalAddress_yes"
+                      class="sg-Radio-input ng-valid ng-not-empty ng-valid-required user-success ng-dirty ng-valid-parse ng-touched"
+                      type="radio"
+                      name="sameAsPostal"
+                      ng-model="$parent.ngModel"
+                      ng-value="value"
+                      ng-disabled="false"
+                      ng-change="onChange(value, 'yes');"
+                      tabindex="0"
+                      ng-required="false"
+                      value="yes"
+                    />
+                    <i class="sg-Radio-icon" />
+                    <span
+                      class="sg-Radio-text ng-binding"
+                      ng-class="{'sg-Radio-btnGroup sg-Radio-btnGroup--xsmall' : sizeType === 'label'}"
+                    >
+                      Yes
+                    </span>
+                  </label>
+                  <label
+                    class="sg-Radio sg-Radio-btn sg-Radio-btn--stacked ng-scope"
+                    ng-class="{'sg-Radio-btnGroup sg-Radio-btnGroup--xsmall' : sizeType === 'label'}"
+                    ng-repeat="value in radioValues"
+                  >
+                    <input
+                      id="customerDetail_sameAsPostalAddress_no"
+                      class="sg-Radio-input ng-valid ng-not-empty ng-valid-required ng-dirty user-success ng-touched"
+                      type="radio"
+                      name="sameAsPostal"
+                      ng-model="$parent.ngModel"
+                      ng-value="value"
+                      ng-disabled="false"
+                      ng-change="onChange(value, 'yes');"
+                      tabindex="0"
+                      ng-required="false"
+                      value="no"
+                    />
+                    <i class="sg-Radio-icon" />
+                    <span
+                      class="sg-Radio-text ng-binding"
+                      ng-class="{'sg-Radio-btnGroup sg-Radio-btnGroup--xsmall' : sizeType === 'label'}"
+                    >
+                      No
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="sg-Form-question">
+              <label class="sg-Form-label">Email address</label>
+              <input
+                type="text"
+                class="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
+                ng-model="customerDetail.emailAddress.line1"
+                name="email"
+                validation="field-required email-format field-length"
+                maxlength="60"
+                requirederrorkey="EMAIL_REQUIRED"
+                ng-trim="false"
+                autocomplete="off"
+                elementid="0.3648958252198611"
+              />
+            </div>
+
+            <div class="sg-Form-question">
+              <label class="sg-Form-label">Mobile number</label>
+              <input
+                type="text"
+                class="sg-Input sg-u-widthLarger ssp-input-number ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
+                name="mobileNumber"
+                ng-model="customerDetail.mobileNumber"
+                validation="phone-number-required mobile-number-format"
+                requirederrorkey="PHONE_REQUIRED"
+                maxlength="20"
+                ng-trim="false"
+                autocomplete="off"
+                elementid="0.8614225441307772"
+              />
+            </div>
+
+            <div className="form-group" style={displayaltbutton}>
+              <button
+                type="button"
+                onClick={this.alternateContact}
+                className="sg-Btn-sec btn-default"
+              >
+                <i className="sg-Btn-icon">
+                  <span>
+                    <img
+                      style={styleObject}
+                      src="https://super.suncorp.com.au/ssp/sg/img//Icon-plus--secondary.svg"
+                      alt="Suncorp"
+                    />
+                  </span>
+                </i>
+                Add an alternate contact number
               </button>
             </div>
+            <div id="altcontact" style={displayno}>
+              <div class="sg-Form-question" ng-show="isAlternateContact()">
+                <label class="sg-Form-label"> Work number (optional)</label>
+                <input
+                  type="text"
+                  class="sg-Input sg-u-widthLarger ssp-input-number ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
+                  name="workNumber"
+                  ng-model="customerDetail.workNumber"
+                  validation="fix-line-number-format"
+                  optional="true"
+                  maxlength="20"
+                  ng-trim="false"
+                  autocomplete="off"
+                  elementid="0.9751602913727455"
+                />
+              </div>
+              <div class="sg-Form-question" ng-show="isAlternateContact()">
+                <label class="sg-Form-label"> Home number (optional)</label>
+                <input
+                  type="text"
+                  class="sg-Input sg-u-widthLarger ssp-input-number ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
+                  name="homeNumber"
+                  ng-model="customerDetail.homeNumber"
+                  optional="true"
+                  validation="fix-line-number-format"
+                  maxlength="20"
+                  ng-trim="false"
+                  autocomplete="off"
+                  elementid="0.8233781411367695"
+                />
+              </div>
+            </div>
+            <button
+              onClick={this.props.onTitleChange}
+              type="submit"
+              className="btn btn-warning sg-Btn"
+              id="acquire_your_detail_continue"
+            >
+              Continue
+            </button>
+            {/* </div> */}
           </form>
         </div>
       </div>
     );
   }
 }
+Pagebody.PropTypes = {
+  onTitleChange: PropTypes.func
+};
 //export default Pagebody;
 export default connect(null)(Pagebody);

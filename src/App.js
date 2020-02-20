@@ -5,19 +5,26 @@ import Header from "./Header/Header";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Pagebody from "./components/Pagebody";
 import Next1Page from "./components/Next1Page";
+import NavPage from "./components/NavPage";
+import PropTypes from "prop-types";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       disply: true,
+      superrDetails: true,
       secondpage: false,
       handleTitleChange: "test"
     };
+    this.onGreat = this.onGreat.bind(this);
   }
-  // this.state.handleTitleChange(event){
-  //   setTitle(evt.target.value)
-  // }
+  onGreat() {
+    this.setState({
+      disply: false,
+      superrDetails: false
+    });
+  }
 
   render() {
     console.log("after use " + this.state.disply);
@@ -25,33 +32,19 @@ class App extends Component {
     return (
       <div>
         <Header />
-        {this.state.disply ? (
-          <Pagebody onTitleChange={this.state.handleTitleChange} />
-        ) : null}
+        <NavPage superrDetails={this.state.superrDetails} />
+        {this.state.disply ? <Pagebody onTitleChange={this.onGreat} /> : null}
         {this.state.secondpage ? <Next1Page /> : null}
-
         <hr />
         <div className="col-md-6">
           <PostList />
         </div>
       </div>
-      // <div className="container">
-      //   <div className="col-md-6">
-      //     <Header />
-      //   </div>
-
-      //   <div className="row" style={stylesApp}>
-      //     <div className="col-md-6">
-      //       <NewPost />
-      //     </div>
-      //     <hr />
-      //     <div className="col-md-6">
-      //       <PostList />
-      //     </div>
-      //   </div>
-      // </div>
     );
   }
 }
 
 export default App;
+NavPage.PropTypes = {
+  superrDetails: PropTypes.bool
+};
