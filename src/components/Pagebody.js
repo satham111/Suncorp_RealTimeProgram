@@ -24,12 +24,16 @@ class Pagebody extends React.Component {
       emailaddress: "",
       mobilenumber: "",
       disply: true,
-      enableAltCont: false
+      enableAltCont: false,
+      onclickTFN: false,
+      onclickOccupation: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.alternateContact = this.alternateContact.bind(this);
+    this.onclickTFN = this.onclickTFN.bind(this);
+    this.onclickOccupation = this.onclickOccupation.bind(this);
   }
 
   handleChange(e) {
@@ -67,6 +71,28 @@ class Pagebody extends React.Component {
       enableAltCont: true
     });
   };
+  onclickTFN = () => {
+    if (this.state.onclickTFN === false) {
+      this.setState({
+        onclickTFN: true
+      });
+    } else {
+      this.setState({
+        onclickTFN: false
+      });
+    }
+  };
+  onclickOccupation = () => {
+    if (this.state.onclickOccupation === false) {
+      this.setState({
+        onclickOccupation: true
+      });
+    } else {
+      this.setState({
+        onclickOccupation: false
+      });
+    }
+  };
   render() {
     const styleObject = {
       height: "25px"
@@ -76,6 +102,12 @@ class Pagebody extends React.Component {
     };
     const displayaltbutton = {
       display: this.state.enableAltCont ? "none" : "block"
+    };
+    const onclickTFN = {
+      display: this.state.onclickTFN ? "block" : "none"
+    };
+    const onclickOccupation = {
+      display: this.state.onclickOccupation ? "block" : "none"
     };
     return (
       <div className="sg-main ">
@@ -194,7 +226,7 @@ class Pagebody extends React.Component {
 
             <div class="sg-Form-question">
               <label className="sg-Form-label">Date of birth</label>
-
+              <br />
               <DatePicker
                 class="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
                 name="dob"
@@ -235,11 +267,13 @@ class Pagebody extends React.Component {
                   aria-selected="false"
                   aria-controls="tfn_accordion_content"
                   role="tab"
+                  onClick={this.onclickTFN}
                 >
                   Why do you need my TFN?
                 </button>
 
                 <div
+                  style={onclickTFN}
                   id="tfn_accordion_content"
                   class="sg-Accordion-content is-closed sg-Type--size14"
                   aria-expanded="false"
@@ -316,11 +350,12 @@ class Pagebody extends React.Component {
                   aria-selected="false"
                   aria-controls="occupation_accordion_content"
                   role="tab"
+                  onClick={this.onclickOccupation}
                 >
                   Why do you need my occupation?
                 </button>
-
                 <div
+                  style={onclickOccupation}
                   id="occupation_accordion_content"
                   class="sg-Accordion-content is-closed sg-Type--size14"
                   aria-expanded="false"
