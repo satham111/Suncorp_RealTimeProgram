@@ -8,7 +8,6 @@ import PropTypes from "prop-types";
 class Pagebody extends React.Component {
   constructor(props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
     this.state = {
       startDate: new Date(),
       fistname: "",
@@ -26,7 +25,11 @@ class Pagebody extends React.Component {
       disply: true,
       enableAltCont: false,
       onclickTFN: false,
-      onclickOccupation: false
+      first_name_chk: null,
+      onclickOccupation: false,
+      last_name: false,
+      errormessage: null,
+      last_name_chk: null
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,13 +37,42 @@ class Pagebody extends React.Component {
     this.alternateContact = this.alternateContact.bind(this);
     this.onclickTFN = this.onclickTFN.bind(this);
     this.onclickOccupation = this.onclickOccupation.bind(this);
+    this.onBlur = this.onBlur.bind(this);
   }
 
   handleChange(e) {
+    // alert(e.target.id);
     this.setState({
       redirectToReferrer: false
     });
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onBlur(e) {
+    var letters = /^[A-Za-z]+$/;
+    if (e.target.name === "first-name") {
+      if (e.target.value === "" || /[^a-zA-Z]/ !== e.target.vale) {
+        e.target.value === "" ||
+          this.setState({
+            first_name_chk: "is-invalid sg-Validation--questionInvalid",
+            errormessage: "Please enter your first name."
+          });
+      } else {
+        this.setState({ first_name_chk: "", errormessage: "" });
+      }
+    } else if (e.target.name === "last-name") {
+      if (e.target.value === "") {
+        this.setState({
+          last_name_chk: "is-invalid sg-Validation--questionInvalid",
+          lastnameerrormessage: "Please enter your last name."
+        });
+      } else {
+        this.setState({
+          last_name_chk: "",
+          lastnameerrormessage: ""
+        });
+      }
+    }
   }
 
   handleSubmit = e => {
@@ -71,7 +103,8 @@ class Pagebody extends React.Component {
       enableAltCont: true
     });
   };
-  onclickTFN = () => {
+  onclickTFN = vale => {
+    // alert(vale.target.id);
     if (this.state.onclickTFN === false) {
       this.setState({
         onclickTFN: true
@@ -112,19 +145,28 @@ class Pagebody extends React.Component {
     return (
       <div className="sg-main ">
         <div className="container">
-          <h5>Your details</h5>
+          <h2>Your details</h2>
           <p>
             Please answer all of the below questions, except where indicated as
             optional.
           </p>
           <form onSubmit={this.handleSubmit} className="form-group column">
-            <div class="sg-Form-question">
-              <label class="sg-Form-label" for="first-name">
+            <div class="sg-Form-question sg-Validation--questionInvalid">
+              <label
+                class={`sg-Form-label ${this.state.first_name_chk}`}
+                name="first-name"
+              >
+                {" "}
                 First name
               </label>
               <input
+                onBlur={this.onBlur}
+                aria-required="true"
+                required
                 type="text"
-                class="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
+                class={`sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength ${
+                  this.state.first_name_chk
+                }`}
                 name="first-name"
                 inputmode="latin-name"
                 maxlength="50"
@@ -133,19 +175,32 @@ class Pagebody extends React.Component {
                 ng-disabled="acquireExisting"
                 validationdisabled="true"
                 validation="field-required first-name field-length"
-                autocomplete="off"
+                autocomplete="on"
                 elementid="0.5279141440573916"
                 onChange={this.handleChange}
               />
             </div>
+            <div name="errorfirstname" className="sg-Validation-errorWrapper">
+              <p class="sg-Validation-errorMessage">
+                {" "}
+                {this.state.errormessage}
+                {/* Please enter your first name. */}
+              </p>
+            </div>
 
             <div class="sg-Form-question">
-              <label class="sg-Form-label" for="last-name">
+              <label
+                name="last-name"
+                class={`sg-Form-label ${this.state.last_name_chk}`}
+              >
                 Last name
               </label>
               <input
+                onBlur={this.onBlur}
                 type="text"
-                class="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
+                class={`sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength ${
+                  this.state.last_name_chk
+                }`}
                 name="last-name"
                 inputmode="latin-name"
                 maxlength="50"
@@ -159,6 +214,13 @@ class Pagebody extends React.Component {
                 elementid="0.8915857547482979"
                 onChange={this.handleChange}
               />
+            </div>
+            <div name="errorfirstname" className="sg-Validation-errorWrapper">
+              <p class="sg-Validation-errorMessage">
+                {" "}
+                {this.state.lastnameerrormessage}
+                {/* Please enter your first name. */}
+              </p>
             </div>
 
             <div className="sg-Form-question">
@@ -227,13 +289,22 @@ class Pagebody extends React.Component {
             <div class="sg-Form-question">
               <label className="sg-Form-label">Date of birth</label>
               <br />
-              <DatePicker
+              <input
+                type="date"
+                id="start"
+                name="trip-start"
+                // value="2018-07-22"
+                min="1945-01-01"
+                max="2020-07-22"
+                class="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
+              />
+              {/* <DatePicker
                 class="sg-Input sg-u-widthLarger ctHidden ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty ng-valid-maxlength"
                 name="dob"
                 className="form-control"
                 selected={this.state.startDate}
                 onChange={this.handleOnChange}
-              />
+              /> */}
             </div>
 
             <div class="sg-Form-question" ng-show="!tfnSupplied()">
@@ -395,7 +466,7 @@ class Pagebody extends React.Component {
               </div>
             </div>
             <div id="before-appbar" />
-            <h5>Contact Details</h5>
+            <h2 class="sg-Type--heading5">Contact details</h2>
 
             <div class="sg-Form-question">
               <label class="sg-Form-label">Address line 1</label>

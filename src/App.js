@@ -7,6 +7,7 @@ import Pagebody from "./components/Pagebody";
 import Next1Page from "./components/Next1Page";
 import NavPage from "./components/NavPage";
 import PropTypes from "prop-types";
+import Footer from "./Footer/Footer";
 
 class App extends Component {
   constructor(props) {
@@ -33,9 +34,14 @@ class App extends Component {
       <div>
         <Header />
         <NavPage superrDetails={this.state.superrDetails} />
-        {this.state.disply ? <Pagebody onTitleChange={this.onGreat} /> : null}
+        {this.state.disply ? (
+          <Pagebody onTitleChange={this.onGreat} />
+        ) : (
+          <Next1Page />
+        )}
         {this.state.secondpage ? <Next1Page /> : null}
         <hr />
+        {/* <Footer /> */}
         <div className="col-md-6">
           <PostList />
         </div>

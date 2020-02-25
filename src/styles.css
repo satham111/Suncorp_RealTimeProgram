@@ -424,3 +424,93 @@ ol {
 .sg-Main-content {
   padding: 20px 20px 10px 20px;
 }
+.sg-Type--heading5,
+h5 {
+  font-size: 1.26rem;
+}
+
+.sg-Type--heading5,
+.sg-Type--heading6,
+h5,
+h6 {
+  font-weight: bold;
+}
+.sg-Type--heading,
+.sg-Type--headingTitle,
+.sg-Type--heading1,
+.sg-Type--heading2,
+.sg-Type--heading3,
+.sg-Type--heading4,
+.sg-Type--heading5,
+.sg-Type--heading6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: AtlasGrotesk, Arial, sans-serif;
+  font-style: normal;
+  /* font-weight: bold; */
+  line-height: 1.2em;
+  color: rgb(0, 67, 70);
+  /* margin: 20px 0px 0px; */
+}
+::selection {
+  background: rgb(240, 226, 103);
+}
+
+.sg-Input.is-invalid {
+  border-color: #bd1903;
+}
+.sg-Input.is-invalid {
+  border-color: #bd1903;
+  background-color: #fcf4f2;
+}
+.sg-Input {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.sg-Input {
+  -webkit-transition: -webkit-box-shadow 0.2s ease-in;
+  -moz-transition: -moz-box-shadow 0.2s ease-in;
+  -o-transition: box-shadow 0.2s ease-in;
+  transition: box-shadow 0.2s ease-in;
+}
+
+.sg-Input {
+  display: block;
+  width: 100%;
+  min-width: 4em;
+  padding: 10px;
+  margin: 0 0 5px 0;
+  color: #000000;
+  vertical-align: middle;
+  font-size: 1.12em;
+  font-size: 1.008rem;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cdcbc3;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.sg-Validation--questionInvalid {
+  border-color: #bd1903;
+  color: #bd1903;
+}
+.sg-Validation-errorWrapper p {
+  font-size: 0.8rem;
+}
+.sg-Validation-errorMessage,
+.validation-errorMessage {
+  color: #bd1903;
+  font-size: 0.84em;
+  font-size: 0.756rem;
+}
+
+.sg-Type--paragraph,
+p {
+  margin: 0 0 10px 0;
+}
